@@ -7,6 +7,7 @@ A REST API built with Django Rest Framework and JWT authentication.
 - Habit management
 - Habit logs (daily/weekly)
 - Task management
+- Analytics
 - Secure ownership-based access
 - PostgreSQL database
 
