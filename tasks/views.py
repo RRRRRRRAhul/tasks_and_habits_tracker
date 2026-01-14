@@ -1,6 +1,7 @@
 from rest_framework import generics, permissions
 from .models import Task
 from .serializers import TaskSerializer
+from .permissions import TaskOwnerPermission
 
 class TaskData(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -14,7 +15,7 @@ class TaskData(generics.ListCreateAPIView):
     
 
 class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, TaskOwnerPermission]
     serializer_class = TaskSerializer
     lookup_field = "id"
 

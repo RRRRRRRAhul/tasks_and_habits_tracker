@@ -1,6 +1,7 @@
 from rest_framework import generics, permissions
 from .models import Habit, HabitLog
 from .serializers import HabitSerializer, HabitLogSerializer
+from .permissions import HabitOwnerPermission, HabitLogOwnerPermission
 
 class HabitData(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -13,7 +14,7 @@ class HabitData(generics.ListCreateAPIView):
         return serializer.save(user=self.request.user)
     
 class HabitDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, HabitOwnerPermission]
     serializer_class = HabitSerializer
     lookup_field = "id"
 
@@ -21,7 +22,7 @@ class HabitDetail(generics.RetrieveUpdateDestroyAPIView):
         return Habit.objects.filter(user=self.request.user)
     
 class HabitLogData(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, HabitLogOwnerPermission]
     serializer_class = HabitLogSerializer
 
     def get_queryset(self):
